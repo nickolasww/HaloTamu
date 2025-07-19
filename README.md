@@ -30,7 +30,7 @@
 
 ## ⚙️ Konfigurasi ESLint Type-Aware
 Untuk linting berbasis TypeScript dengan dukungan penuh:
-
+``bash
 // eslint.config.js
 import tseslint from 'typescript-eslint'
 import reactX from 'eslint-plugin-react-x'
