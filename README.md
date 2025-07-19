@@ -27,31 +27,3 @@
   npm install
 3. **Jalankan development server**
   npm run dev
-
-## ⚙️ Konfigurasi ESLint Type-Aware
-Untuk linting berbasis TypeScript dengan dukungan penuh:
-``bash
-// eslint.config.js
-import tseslint from 'typescript-eslint'
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      ...tseslint.configs.recommendedTypeChecked,
-      // atau gunakan strictTypeChecked
-      // ...tseslint.configs.strictTypeChecked,
-      ...tseslint.configs.stylisticTypeChecked,
-      reactX.configs['recommended-typescript'],
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
-])
