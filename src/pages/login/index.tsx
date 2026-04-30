@@ -103,7 +103,7 @@ const LoginPage = () => {
             <div className="text-center border-[1px] border-gray-600 dark:border-gray-400 p-3 rounded-xl"> 
                 <h2 className="text-sm text-gray-600 dark:text-gray-400">Demo Email & Password</h2>
                 <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                    Email: <span className="font-mono">admin1@example.com</span>
+                    Email: <span className="font-mono">admin1@gmail.com</span>
                     <br/>
                     Password: <span className="font-mono">Admin1</span>
                 </div>
