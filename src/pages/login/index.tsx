@@ -1,22 +1,27 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { isAuthenticated, islogin } from "../../utils/auth"; 
+import { islogin } from "../../utils/auth"; 
+import { supabase } from "../../lib/supabase";
 
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
-        username: "",
+        email: "",
         password: ""
     });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (isAuthenticated()) {
-            navigate("/dashboard");
+    useEffect(() => { 
+        const checkAuth = async () => { 
+            const {data} = await supabase.auth.getSession()
+            if(data.session){ 
+                navigate("/dashboard");
+            }
         }
-    }, [navigate])
+        checkAuth(); 
+    }, [navigate]);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -24,11 +29,11 @@ const LoginPage = () => {
         setError("");
 
         try{ 
-            const success = islogin(formData.username, formData.password);
+            const success = await islogin(formData.email, formData.password);
             if(success) { 
                 navigate("/dashboard");
             } else { 
-                setError("Username atau Password salah");
+                setError("Email atau Password salah");
             }
         } catch (error) {
             setError("Terjadi kesalahan, silakan coba lagi");
@@ -58,13 +63,13 @@ const LoginPage = () => {
             <div className="rounded-xl shadow-sm -space-y-px flex flex-col gap-4"> 
                 <div > 
                     <input
-                    id="username"
-                    name="username"
-                    type="text"
+                    id="email"
+                    name="email"
+                    type="email"
                     required
                     className="appearance-none rounded-xl relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-700 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm bg-white dark:bg-gray-700"
-                    placeholder="Username"
-                    value={formData.username}
+                    placeholder="Email"
+                    value={formData.email}
                     onChange={handleChange}
                     /> 
                 </div> 
@@ -96,11 +101,11 @@ const LoginPage = () => {
             </div>
 
             <div className="text-center border-[1px] border-gray-600 dark:border-gray-400 p-3 rounded-xl"> 
-                <h2 className="text-sm text-gray-600 dark:text-gray-400">Demo Username & Password</h2>
+                <h2 className="text-sm text-gray-600 dark:text-gray-400">Demo Email & Password</h2>
                 <div className="text-xs text-gray-600 dark:text-gray-400 mt-1">
-                    Username: <span className="font-mono">Admin</span>
+                    Email: <span className="font-mono">admin1@example.com</span>
                     <br/>
-                    Password: <span className="font-mono">SelamatDatang123</span>
+                    Password: <span className="font-mono">Admin1</span>
                 </div>
             </div>
         </form>
